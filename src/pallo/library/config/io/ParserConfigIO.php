@@ -12,13 +12,7 @@ use pallo\library\system\file\File;
 /**
  * Parser implementation of the configuration I/O using the Pallo file browser
  */
-class ParserConfigIO implements ConfigIO {
-
-    /**
-     * Instance of the file browser
-     * @var pallo\library\system\file\browser\FileBrowser
-     */
-    protected $fileBrowser;
+class ParserConfigIO extends AbstractIO implements ConfigIO {
 
     /**
      * Instance of the config helper
@@ -33,98 +27,22 @@ class ParserConfigIO implements ConfigIO {
     protected $parser;
 
     /**
-     * Extension of the files
-     * @var string
+     * Loaded configuration
+     * @var array
      */
-    protected $extension;
-
-    /**
-     * Relative path of the files
-     * @var string
-     */
-    protected $path;
-
-    /**
-     * Name of the environment
-     * @var string
-     */
-    protected $environment;
+    protected $config;
 
     /**
      * Constructs a new Pallo configuration I/O
      * @return null
      */
-    public function __construct(FileBrowser $fileBrowser, ConfigHelper $configHelper, Parser $parser, $extension, $path = null) {
-        $this->fileBrowser = $fileBrowser;
+    public function __construct(FileBrowser $fileBrowser, ConfigHelper $configHelper, Parser $parser, $file, $path = null) {
+        parent::__construct($fileBrowser, $file, $path);
+
         $this->helper = $configHelper;
         $this->parser = $parser;
 
-        $this->setExtension($extension);
-        $this->setPath($path);
-    }
-
-    /**
-     * Sets the extension for configuration files of this IO
-     * @param string $extension
-     * @throws pallo\library\config\exception\ConfigException
-     */
-    public function setExtension($extension) {
-        if (!is_string($extension) || $extension == '') {
-            throw new ConfigException('Could not set the extension: provided extension is empty or invalid');
-        }
-
-        $this->extension = $extension;
-    }
-
-    /**
-     * Gets the extension for configuration files of this IO
-     * @return string
-     */
-    public function getExtension() {
-        return $this->extension;
-    }
-
-    /**
-     * Sets the relative path for configuration files of this IO
-     * @param string $path
-     * @throws pallo\library\config\exception\ConfigException
-     */
-    public function setPath($path) {
-        if (!is_string($path) || $path == '') {
-            throw new ConfigException('Could not set the path: provided path is empty or invalid');
-        }
-
-        $this->path = $path;
-    }
-
-    /**
-     * Gets the relative path for the configuration files of this IO
-     * @return string
-     */
-    public function getPath() {
-        return $this->path;
-    }
-
-    /**
-     * Sets the name of the environment
-     * @param string $environment Name of the environment
-     * @return null
-     * @throws Exception when the provided name is empty or not a string
-     */
-    public function setEnvironment($environment = null) {
-        if ($environment !== null && (!is_string($environment) || !$environment)) {
-            throw new Exception('Could not set the environment: provided environment is empty or not a string');
-        }
-
-        $this->environment = $environment;
-    }
-
-    /**
-     * Gets the name of the environment
-     * @return string|null
-     */
-    public function getEnvironment() {
-        return $this->environment;
+        $this->config = null;
     }
 
     /**
@@ -133,51 +51,11 @@ class ParserConfigIO implements ConfigIO {
      * configuration directory, withouth the extension
      */
     public function getAllSections() {
-        $sections = array();
-
-        $includeDirectories = $this->fileBrowser->getIncludeDirectories();
-        foreach ($includeDirectories as $directory) {
-            if ($this->path) {
-                $directory = $directory->getChild($this->path);
-            }
-
-            $sections = $this->getSectionsFromPath($directory) + $sections;
-
-            if ($this->environment) {
-                $sections = $this->getSectionsFromPath($directory->getChild($this->environment)) + $sections;
-            }
+        if ($this->config === null) {
+            $this->read();
         }
 
-        return array_keys($sections);
-    }
-
-    /**
-     * Get the names of the sections in the provided path
-     * @param pallo\library\system\file\File $path
-     * @return array Array with the file names of all the sections, without
-     * the extension, as key
-     */
-    protected function getSectionsFromPath(File $path) {
-        $sections = array();
-
-        if (!$path->exists()) {
-            return $sections;
-        }
-
-        $extensionLength = strlen($this->extension);
-
-        $files = $path->read();
-        foreach ($files as $file) {
-            if ($file->isDirectory() || $file->getExtension() != $this->extension) {
-                continue;
-            }
-
-            $sectionName = substr($file->getName(), 0, ($extensionLength + 1) * -1);
-
-            $sections[$sectionName] = true;
-        }
-
-        return $sections;
+        return array_keys($this->config);
     }
 
     /**
@@ -185,14 +63,11 @@ class ParserConfigIO implements ConfigIO {
      * @return array Hierarchic array with each configuration token as a key
      */
     public function getAll() {
-        $all = array();
-
-        $sections = $this->getAllSections();
-        foreach ($sections as $section) {
-            $all[$section] = $this->get($section);
+        if ($this->config === null) {
+            $this->read();
         }
 
-        return $all;
+        return $this->config;
     }
 
     /**
@@ -207,9 +82,23 @@ class ParserConfigIO implements ConfigIO {
             throw new ConfigException('Could not get section: provided section name is empty or invalid');
         }
 
-        $config = array();
-        $fileName = $section . '.' . $this->extension;
+        if ($this->config === null) {
+            $this->read();
+        }
 
+        if (!isset($this->config[$section])) {
+            return array();
+        }
+
+        return $this->config[$section];
+    }
+
+    /**
+     * Reads the configuration
+     * @return null
+     */
+    protected function read() {
+        $this->config = array();
         $this->variables = array(
             'application' => $this->fileBrowser->getApplicationDirectory(),
             'environment' => $this->environment,
@@ -217,15 +106,13 @@ class ParserConfigIO implements ConfigIO {
             'public' => $this->fileBrowser->getPublicDirectory(),
         );
 
-        $this->readFiles($config, $fileName);
+        $this->readFiles($this->config, $this->file);
 
         if ($this->environment) {
-            $this->readFiles($config, $this->environment . File::DIRECTORY_SEPARATOR . $fileName);
+            $this->readFiles($this->config, $this->environment . File::DIRECTORY_SEPARATOR . $this->file);
         }
 
-        $this->variables = null;
-
-        return $config;
+        unset($this->variables);
     }
 
     /**
@@ -257,12 +144,12 @@ class ParserConfigIO implements ConfigIO {
      */
     protected function readFile(array &$config, File $file) {
         try {
-            $ini = $file->read();
+            $parameters = $file->read();
 
-            $ini = $this->parser->parseToPhp($ini);
-            $ini = $this->helper->flattenConfig($ini);
+            $parameters = $this->parser->parseToPhp($parameters);
+            $parameters = $this->helper->flattenConfig($parameters);
 
-            foreach ($ini as $key => $value) {
+            foreach ($parameters as $key => $value) {
                 $value = $this->parseVariables($value);
 
                 $this->helper->setValue($config, $key, $value);
@@ -303,11 +190,6 @@ class ParserConfigIO implements ConfigIO {
             throw new ConfigException('Could not set configuration value: provided key is empty or invalid');
         }
 
-        $tokens = explode(Config::TOKEN_SEPARATOR, $key);
-        if (count($tokens) < 2) {
-            throw new ConfigException('Could not set ' . $key . ': key should have at least 2 tokens (eg system.memory). Use ' . Config::TOKEN_SEPARATOR . ' as a token separator.');
-        }
-
         $path = $this->fileBrowser->getApplicationDirectory();
 
         if ($path === null) {
@@ -326,8 +208,7 @@ class ParserConfigIO implements ConfigIO {
         $path->create();
 
         // gets the file, based on the section of the key
-        $file = array_shift($tokens) . '.' . $this->extension;
-        $file = $path->getChild($file);
+        $file = $path->getChild($this->file);
 
         // gets the existing values from the file
         $values = array();
@@ -336,7 +217,6 @@ class ParserConfigIO implements ConfigIO {
         }
 
         // add the new configuration value
-        $key = implode(Config::TOKEN_SEPARATOR, $tokens);
         $this->helper->setValue($values, $key, $value);
 
         // write the file
@@ -346,6 +226,11 @@ class ParserConfigIO implements ConfigIO {
             $file->write($config);
         } elseif ($file->exists()) {
             $file->delete();
+        }
+
+        // set the value in this io
+        if ($this->config !== null) {
+            $this->helper->setValue($this->config, $key, $value);
         }
     }
 
