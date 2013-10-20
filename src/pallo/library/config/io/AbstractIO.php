@@ -3,6 +3,7 @@
 namespace pallo\library\config\io;
 
 use pallo\library\config\exception\ConfigException;
+use pallo\library\config\Config;
 use pallo\library\system\file\browser\FileBrowser;
 
 /**
@@ -35,6 +36,12 @@ abstract class AbstractIO {
     protected $environment;
 
     /**
+     * Instance of the configuration
+     * @var pallo\library\config\Config
+     */
+    protected $config;
+
+    /**
      * Constructs a new abstract IO
      * @param pallo\library\system\file\browser\FileBrowser $fileBrowser
      * @param string $file Name of the file
@@ -43,9 +50,19 @@ abstract class AbstractIO {
      */
     public function __construct(FileBrowser $fileBrowser, $file, $path = null) {
         $this->fileBrowser = $fileBrowser;
+        $this->config = null;
 
         $this->setFile($file);
         $this->setPath($path);
+    }
+
+    /**
+     * Sets the configuration
+     * @param pallo\library\config\Config $config
+     * @return null
+     */
+    public function setConfig(Config $config) {
+        $this->config = $config;
     }
 
     /**
@@ -111,6 +128,35 @@ abstract class AbstractIO {
      */
     public function getEnvironment() {
         return $this->environment;
+    }
+
+    /**
+     * Gets a parameter value if applicable (delimited by %)
+     * @param string $parameter Parameter string
+     * @return string Provided parameter if not a parameter string, the
+     * parameter value otherwise
+     * @throws pallo\library\config\exception\ConfigException when no
+     * configuration set
+     */
+    protected function processParameter($parameter) {
+        if (!$this->config) {
+            throw new ConfigException('Could not process the parameter: no configuration set, invoke setConfig() first');
+        }
+
+        if (substr($parameter, 0, 1) != '%' || substr($parameter, -1) != '%') {
+            return $parameter;
+        }
+
+        $parameter = substr($parameter, 1, -1);
+
+        if (strpos($parameter, '|') !== false) {
+            list($key, $default) = explode('|', $parameter, 2);
+        } else {
+            $key = $parameter;
+            $default = null;
+        }
+
+        return $this->config->get($key, $default);
     }
 
 }
