@@ -128,7 +128,10 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
 
         $files = array_reverse($this->fileBrowser->getFiles($fileName));
         foreach ($files as $file) {
-            $this->variables['path'] = $file->getParent()->getPath();
+            $path = $file->getAbsolutePath();
+            $path = str_replace('/' . $fileName, '', $path);
+
+            $this->variables['path'] = $path;
 
             $this->readFile($config, $file);
         }
