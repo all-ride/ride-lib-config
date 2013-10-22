@@ -219,8 +219,13 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
             $this->readFile($values, $file);
         }
 
-        // add the new configuration value
-        $this->helper->setValue($values, $key, $value);
+        // set the new configuration value
+        $values = $this->helper->flattenConfig($values);
+        if ($value !== null) {
+            $values[$key] = $value;
+        } elseif (array_key_exists($key, $values)) {
+            unset($values[$key]);
+        }
 
         // write the file
         $config = $this->parser->parseFromPhp($values);
