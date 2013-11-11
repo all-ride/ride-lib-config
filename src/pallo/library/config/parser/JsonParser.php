@@ -55,7 +55,11 @@ class JsonParser implements Parser {
      * @return string Configuration string
      */
     public function parseFromPhp(array $var) {
-        return json_encode($var, JSON_PRETTY_PRINT);
+        if (defined('JSON_PRETTY_PRINT')) {
+            return json_encode($var, JSON_PRETTY_PRINT);
+        } else {
+            return json_encode($var);
+        }
     }
 
 }
