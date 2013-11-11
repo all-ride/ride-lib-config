@@ -2,7 +2,7 @@
     "name": "pallo/lib-config",
     "description": "Configuration library of the Pallo framework",
     "license": "MIT",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "authors": [
         {
             "name": "Joris Vandeweerd",
