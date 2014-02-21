@@ -1,28 +1,28 @@
 <?php
 
-namespace pallo\library\config\io;
+namespace ride\library\config\io;
 
-use pallo\library\config\exception\ConfigException;
-use pallo\library\config\parser\Parser;
-use pallo\library\config\ConfigHelper;
-use pallo\library\config\Config;
-use pallo\library\system\file\browser\FileBrowser;
-use pallo\library\system\file\File;
+use ride\library\config\exception\ConfigException;
+use ride\library\config\parser\Parser;
+use ride\library\config\ConfigHelper;
+use ride\library\config\Config;
+use ride\library\system\file\browser\FileBrowser;
+use ride\library\system\file\File;
 
 /**
- * Parser implementation of the configuration I/O using the Pallo file browser
+ * Parser implementation of the configuration I/O using the Ride file browser
  */
 class ParserConfigIO extends AbstractIO implements ConfigIO {
 
     /**
      * Instance of the config helper
-     * @var pallo\library\config\ConfigHelper
+     * @var ride\library\config\ConfigHelper
      */
     protected $helper;
 
     /**
      * Instance of the parser for the configuration format
-     * @var pallo\library\config\parser\Parser
+     * @var ride\library\config\parser\Parser
      */
     protected $parser;
 
@@ -33,7 +33,7 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
     protected $config;
 
     /**
-     * Constructs a new Pallo configuration I/O
+     * Constructs a new Ride configuration I/O
      * @return null
      */
     public function __construct(FileBrowser $fileBrowser, ConfigHelper $configHelper, Parser $parser, $file, $path = null) {
@@ -74,7 +74,7 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
      * Gets the configuration values for a section
      * @param string $section Name of the section
      * @return array Hierarchic array with each configuration token as a key
-     * @throws pallo\library\config\exception\ConfigException when the section
+     * @throws ride\library\config\exception\ConfigException when the section
      * name is invalid or empty
      */
     public function get($section) {
@@ -140,9 +140,9 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
     /**
      * Read the configuration values for the provided file and add them to the provided values array
      * @param array $configArray with the values which are already read
-     * @param pallo\library\system\file\File $file file to read and parse
+     * @param ride\library\system\file\File $file file to read and parse
      * @return null
-     * @throws pallo\library\config\exception\ConfigException when the provided
+     * @throws ride\library\config\exception\ConfigException when the provided
      * file could not be read
      */
     protected function readFile(array &$config, File $file) {
@@ -185,7 +185,7 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
      * @param string $key Configuration key
      * @param mixed $value Value to write
      * @return null
-     * @throws pallo\library\config\exception\ConfigException when the provided
+     * @throws ride\library\config\exception\ConfigException when the provided
      * key is invalid or empty
      */
     public function set($key, $value) {

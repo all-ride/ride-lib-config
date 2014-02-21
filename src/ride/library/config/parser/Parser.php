@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\library\config\parser;
+namespace ride\library\config\parser;
 
 /**
  * Parser interface for different file formats

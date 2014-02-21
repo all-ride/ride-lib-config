@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\library\config\io;
+namespace ride\library\config\io;
 
 /**
  * Interface for the input/output implementation of the configuration
