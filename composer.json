@@ -1,6 +1,6 @@
 {
-    "name": "pallo/lib-config",
-    "description": "Configuration library of the Pallo framework",
+    "name": "ride/lib-config",
+    "description": "Configuration library of the Ride framework",
     "license": "MIT",
     "version": "0.2.4",
     "authors": [
@@ -10,11 +10,11 @@
         }
     ],
     "require": {
-        "pallo/lib-system": ">=0.1.0"
+        "ride/lib-system": ">=0.1.0"
     }, 
     "autoload": {
         "psr-0": {
-            "pallo\\library\\config\\": ["src/", "test/src/"]
+            "ride\\library\\config\\": ["src/", "test/src/"]
         }
     }
 }

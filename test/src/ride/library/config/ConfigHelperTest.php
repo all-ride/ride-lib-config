@@ -1,13 +1,13 @@
 <?php
 
-namespace pallo\library\config;
+namespace ride\library\config;
 
 use \PHPUnit_Framework_TestCase;
 
 class ConfigHelperTest extends PHPUnit_Framework_TestCase {
 
     /**
-     * @var pallo\library\config\ConfigHelper
+     * @var ride\library\config\ConfigHelper
      */
     protected $helper;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\library\config;
+namespace ride\library\config;
 
-use pallo\library\config\exception\ConfigException;
+use ride\library\config\exception\ConfigException;
 
 /**
  * Helper for configuration actions

@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\library\config;
+namespace ride\library\config;
 
 use \PHPUnit_Framework_TestCase;
 
@@ -42,7 +42,7 @@ class GenericConfigTest extends PHPUnit_Framework_TestCase {
         );
         $this->mockValue = 'test';
 
-        $this->ioMock = $this->getMock('pallo\\library\\config\\io\\ConfigIO');
+        $this->ioMock = $this->getMock('ride\\library\\config\\io\\ConfigIO');
         $this->config = new GenericConfig($this->ioMock);
     }
 
@@ -91,7 +91,7 @@ class GenericConfigTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException pallo\library\config\exception\ConfigException
+     * @expectedException ride\library\config\exception\ConfigException
      */
     public function testGetValueThrowsExceptionWhenKeyIsEmpty() {
         $this->config->get('');

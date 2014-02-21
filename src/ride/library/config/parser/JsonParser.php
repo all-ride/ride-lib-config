@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\library\config\parser;
+namespace ride\library\config\parser;
 
-use pallo\library\config\exception\ConfigException;
+use ride\library\config\exception\ConfigException;
 /**
  * Parser implementation for the different JSON format
  */

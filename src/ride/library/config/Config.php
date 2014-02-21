@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\library\config;
+namespace ride\library\config;
 
 /**
  * Configuration data container
@@ -33,7 +33,7 @@ interface Config {
      * not set
      * @return mixed Configuration value if set, the provided default
      * value otherwise
-     * @throws pallo\library\config\exception\ConfigException when the key is empty
+     * @throws ride\library\config\exception\ConfigException when the key is empty
      * or not a string
      */
     public function get($key, $default = null);
@@ -43,7 +43,7 @@ interface Config {
      * @param string $key Configuration key
      * @param mixed $value Value for the configuration key
      * @return null
-     * @throws pallo\library\config\exception\ConfigException when the key is
+     * @throws ride\library\config\exception\ConfigException when the key is
      * empty or not a string
      */
     public function set($key, $value);

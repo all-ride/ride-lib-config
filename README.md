@@ -1,3 +1,3 @@
-# Pallo: Configuration Library
+# Ride: Configuration Library
 
-Configuration library of the PHP Pallo framework.
+Configuration library of the PHP Ride framework.
