@@ -13,7 +13,7 @@ abstract class AbstractIO {
 
     /**
      * Instance of the file browser
-     * @var ride\library\system\file\browser\FileBrowser
+     * @var \ride\library\system\file\browser\FileBrowser
      */
     protected $fileBrowser;
 
@@ -37,13 +37,13 @@ abstract class AbstractIO {
 
     /**
      * Instance of the configuration
-     * @var ride\library\config\Config
+     * @var \ride\library\config\Config
      */
     protected $config;
 
     /**
      * Constructs a new abstract IO
-     * @param ride\library\system\file\browser\FileBrowser $fileBrowser
+     * @param \ride\library\system\file\browser\FileBrowser $fileBrowser
      * @param string $file Name of the file
      * @param string $path Relative path in the file browser
      * @return null
@@ -58,7 +58,7 @@ abstract class AbstractIO {
 
     /**
      * Sets the configuration
-     * @param ride\library\config\Config $config
+     * @param \ride\library\config\Config $config
      * @return null
      */
     public function setConfig(Config $config) {
@@ -68,7 +68,7 @@ abstract class AbstractIO {
     /**
      * Sets the name of the configuration file
      * @param string $file
-     * @throws ride\library\config\exception\ConfigException
+     * @throws \ride\library\config\exception\ConfigException
      */
     public function setFile($file) {
         if ($file !== null && (!is_string($file) || $file == '')) {
@@ -89,7 +89,7 @@ abstract class AbstractIO {
     /**
      * Sets the relative path for configuration files of this IO
      * @param string $path
-     * @throws ride\library\config\exception\ConfigException
+     * @throws \ride\library\config\exception\ConfigException
      */
     public function setPath($path) {
         if ($path !== null && (!is_string($path) || $path == '')) {
@@ -111,7 +111,7 @@ abstract class AbstractIO {
      * Sets the name of the environment
      * @param string $environment Name of the environment
      * @return null
-     * @throws ride\library\config\exception\ConfigException when the provided
+     * @throws \ride\library\config\exception\ConfigException when the provided
      * name is empty or not a string
      */
     public function setEnvironment($environment = null) {
@@ -135,7 +135,7 @@ abstract class AbstractIO {
      * @param string $parameter Parameter string
      * @return string Provided parameter if not a parameter string, the
      * parameter value otherwise
-     * @throws ride\library\config\exception\ConfigException when no
+     * @throws \ride\library\config\exception\ConfigException when no
      * configuration set
      */
     protected function processParameter($parameter) {

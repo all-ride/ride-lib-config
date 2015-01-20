@@ -5,7 +5,6 @@ namespace ride\library\config\io;
 use ride\library\config\exception\ConfigException;
 use ride\library\config\parser\Parser;
 use ride\library\config\ConfigHelper;
-use ride\library\config\Config;
 use ride\library\system\file\browser\FileBrowser;
 use ride\library\system\file\File;
 
@@ -16,13 +15,13 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
 
     /**
      * Instance of the config helper
-     * @var ride\library\config\ConfigHelper
+     * @var \ride\library\config\ConfigHelper
      */
     protected $helper;
 
     /**
      * Instance of the parser for the configuration format
-     * @var ride\library\config\parser\Parser
+     * @var \ride\library\config\parser\Parser
      */
     protected $parser;
 
@@ -74,7 +73,7 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
      * Gets the configuration values for a section
      * @param string $section Name of the section
      * @return array Hierarchic array with each configuration token as a key
-     * @throws ride\library\config\exception\ConfigException when the section
+     * @throws \ride\library\config\exception\ConfigException when the section
      * name is invalid or empty
      */
     public function get($section) {
@@ -140,9 +139,9 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
     /**
      * Read the configuration values for the provided file and add them to the provided values array
      * @param array $configArray with the values which are already read
-     * @param ride\library\system\file\File $file file to read and parse
+     * @param \ride\library\system\file\File $file file to read and parse
      * @return null
-     * @throws ride\library\config\exception\ConfigException when the provided
+     * @throws \ride\library\config\exception\ConfigException when the provided
      * file could not be read
      */
     protected function readFile(array &$config, File $file) {
@@ -185,7 +184,7 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
      * @param string $key Configuration key
      * @param mixed $value Value to write
      * @return null
-     * @throws ride\library\config\exception\ConfigException when the provided
+     * @throws \ride\library\config\exception\ConfigException when the provided
      * key is invalid or empty
      */
     public function set($key, $value) {

@@ -15,13 +15,13 @@ class CachedConfigIO implements ConfigIO {
 
     /**
      * ConfigIO which is cached by this ConfigIO
-     * @var ride\library\config\io\ConfigIO
+     * @var \ride\library\config\io\ConfigIO
      */
     private $io;
 
     /**
      * File to write the cache to
-     * @var ride\library\system\file\File
+     * @var \ride\library\system\file\File
      */
     private $file;
 
@@ -34,7 +34,7 @@ class CachedConfigIO implements ConfigIO {
     /**
      * Constructs a new cached ConfigIO
      * @param ConfigIO $io the ConfigIO which needs a cache
-     * @param ride\library\system\file\File $file File for the cache
+     * @param \ride\library\system\file\File $file File for the cache
      * @return null
      */
     public function __construct(ConfigIO $io, File $file) {
@@ -44,7 +44,7 @@ class CachedConfigIO implements ConfigIO {
 
     /**
      * Sets the file for the generated code
-     * @param ride\library\system\file\File $file The file to generate the code in
+     * @param \ride\library\system\file\File $file The file to generate the code in
      * @return null
      */
     public function setFile(File $file) {
@@ -53,7 +53,7 @@ class CachedConfigIO implements ConfigIO {
 
     /**
      * Gets the file for the generated code
-     * @return ride\library\system\file\File The file to generate the code in
+     * @return \ride\library\system\file\File The file to generate the code in
      */
     public function getFile() {
         return $this->file;

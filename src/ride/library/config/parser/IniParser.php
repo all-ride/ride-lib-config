@@ -2,6 +2,8 @@
 
 namespace ride\library\config\parser;
 
+use \ride\library\config\exception\ConfigException;
+
 /**
  * Parser implementation for the INI format
  */
@@ -79,7 +81,7 @@ class IniParser implements Parser {
      * as a key or a value
      * @param string $key Key for the provided values (for recursive calls)
      * @return string Ini of the provided config
-     * @throws ride\library\config\exception\ConfigException when the provided
+     * @throws \ride\library\config\exception\ConfigException when the provided
      * config is not an array and no key is provided
      */
     protected function parseToIni($var, $key = null) {
