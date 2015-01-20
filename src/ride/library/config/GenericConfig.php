@@ -4,7 +4,6 @@ namespace ride\library\config;
 
 use ride\library\config\exception\ConfigException;
 use ride\library\config\io\ConfigIO;
-use ride\library\config\ConfigHelper;
 
 /**
  * Generic config implementation
@@ -13,13 +12,13 @@ class GenericConfig implements Config {
 
     /**
      * Configuration input/output implementation
-     * @var ride\library\config\io\ConfigIO
+     * @var \ride\library\config\io\ConfigIO
      */
     protected $io;
 
     /**
      * Helper for the configuration actions
-     * @var ride\library\config\ConfigHelper
+     * @var \ride\library\config\ConfigHelper
      */
     protected $helper;
 
@@ -31,9 +30,9 @@ class GenericConfig implements Config {
 
     /**
      * Constructs a new configuration container
-     * @param ride\library\config\io\ConfigIO $io Configuration input/output
+     * @param \ride\library\config\io\ConfigIO $io Configuration input/output
      * implementation
-     * @param ride\library\config\ConfigHelper $helper Helper for the
+     * @param \ride\library\config\ConfigHelper $helper Helper for the
      * configuration actions
      * @return null
      */
@@ -45,7 +44,7 @@ class GenericConfig implements Config {
 
     /**
      * Gets the config helper
-     * @return ride\library\config\ConfigHelper
+     * @return \ride\library\config\ConfigHelper
      */
     public function getConfigHelper() {
         if (!$this->helper) {
@@ -71,7 +70,7 @@ class GenericConfig implements Config {
      * not set
      * @return mixed Configuration value if set, the provided default value
      * otherwise
-     * @throws ride\library\config\exception\ConfigException when the key is
+     * @throws \ride\library\config\exception\ConfigException when the key is
      * empty or not a string
      */
     public function get($key, $default = null) {
@@ -102,7 +101,7 @@ class GenericConfig implements Config {
      * @param string $key Configuration key
      * @param mixed $value Value for the configuration key
      * @return null
-     * @throws zibo\library\config\exception\ConfigException when the key is
+     * @throws \ride\library\config\exception\ConfigException when the key is
      * empty or not a string
      */
     public function set($key, $value) {
