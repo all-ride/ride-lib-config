@@ -2,6 +2,8 @@
 
 namespace ride\library\config\parser;
 
+use \ride\library\config\exception\ConfigException;
+
 /**
  * Parser implementation for the INI format
  */
