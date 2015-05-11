@@ -2,7 +2,7 @@
     "name": "ride/lib-config",
     "description": "Configuration library of the Ride framework",
     "license": "MIT",
-    "version": "0.2.5",
+    "version": "0.3.0",
     "authors": [
         {
             "name": "Joris Vandeweerd",
