@@ -43,6 +43,16 @@ class CachedConfigIO implements ConfigIO {
     }
 
     /**
+     * Destruction of the cached ConfigIO
+     * @return null
+     */
+    public function __destruct() {
+        if (isset($this->needsWrite) && $this->needsWrite) {
+            $this->warmCache();
+        }
+    }
+
+    /**
      * Sets the file for the generated code
      * @param \ride\library\system\file\File $file The file to generate the code in
      * @return null
@@ -91,17 +101,6 @@ class CachedConfigIO implements ConfigIO {
         // we have no configuration, use the wrapped IO to get one
         $this->config = $this->io->getAll();
 
-        // generate the PHP code for the obtained configuration
-        $php = $this->generatePhp($this->config);
-
-        // make sure the parent directory of the script exists
-        $parent = $this->file->getParent();
-        $parent->create();
-
-        // write the PHP code to file
-        $this->file->write($php);
-
-        // return the configuration
         return $this->config;
     }
 
@@ -129,11 +128,46 @@ class CachedConfigIO implements ConfigIO {
     public function set($key, $value) {
         if ($this->file->exists()) {
             $this->file->delete();
+
+            $this->needsWrite = true;
         }
 
         $this->io->set($key, $value);
 
         $this->config = null;
+    }
+
+    /**
+     * Warms the cache of the dependency container
+     * @return \ride\library\dependency\DependencyContainer
+     */
+    public function warmCache() {
+        if ($this->config === null) {
+            $this->config = $this->io->getAll();
+        }
+
+        // generate the PHP code for the obtained configuration
+        $php = $this->generatePhp($this->config);
+
+        // make sure the parent directory of the script exists
+        $parent = $this->file->getParent();
+        $parent->create();
+
+        // write the PHP code to file
+        $this->file->write($php);
+
+        // return the configuration
+        return $this->config;
+    }
+
+    /**
+     * Clears the cache of the dependency container
+     * @return null
+     */
+    public function clearCache() {
+        if ($this->file->exists()) {
+            $this->file->delete();
+        }
     }
 
     /**
