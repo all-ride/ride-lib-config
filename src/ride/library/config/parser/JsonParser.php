@@ -24,6 +24,13 @@ class JsonParser implements Parser {
             return $result;
         }
 
+        if (function_exists('json_last_error_msg')) {
+            $error = json_last_error_msg();
+            if ($error) {
+                throw new ConfigException("Could not parse the provided JSON string: " . $error);
+            }
+        }
+
         switch (json_last_error()) {
             case JSON_ERROR_DEPTH:
                 $message = 'maximum stack depth exceeded';
