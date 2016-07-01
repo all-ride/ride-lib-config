@@ -7,7 +7,7 @@ use ride\library\config\Config;
 use ride\library\system\file\browser\FileBrowser;
 
 /**
- * Abstract implementation of a IO
+ * Abstract implementation of an IO
  */
 abstract class AbstractIO {
 
