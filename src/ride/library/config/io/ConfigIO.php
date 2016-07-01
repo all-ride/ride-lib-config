@@ -8,12 +8,6 @@ namespace ride\library\config\io;
 interface ConfigIO {
 
     /**
-     * Gets the names of all the sections in the configuration
-     * @return array Array with the names of all sections in the configuration
-     */
-    public function getAllSections();
-
-    /**
      * Gets the complete configuration
      * @return array Hierarchic array with each configuration token as a key
      */

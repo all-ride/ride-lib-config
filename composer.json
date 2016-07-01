@@ -2,7 +2,6 @@
     "name": "ride/lib-config",
     "description": "Configuration library of the Ride framework",
     "license": "MIT",
-    "version": "0.4.1",
     "authors": [
         {
             "name": "Joris Vandeweerd",
@@ -10,8 +9,8 @@
         }
     ],
     "require": {
-        "ride/lib-system": ">=0.1.0"
-    }, 
+        "ride/lib-system": "^1.0.0"
+    },
     "autoload": {
         "psr-0": {
             "ride\\library\\config\\": ["src/", "test/src/"]

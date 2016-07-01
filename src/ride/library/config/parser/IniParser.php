@@ -2,7 +2,8 @@
 
 namespace ride\library\config\parser;
 
-use \ride\library\config\exception\ConfigException;
+use ride\library\config\exception\ConfigException;
+use ride\library\config\Config;
 
 /**
  * Parser implementation for the INI format
@@ -43,6 +44,10 @@ class IniParser implements Parser {
      * @return array Configuration array
      */
     public function parseToPhp($string) {
+        if ($string == '') {
+            return array();
+        }
+
         // parse the ini string into an array
         $ini = @parse_ini_string($string, true);
 
