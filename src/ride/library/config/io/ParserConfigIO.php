@@ -45,19 +45,6 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
     }
 
     /**
-     * Get the names of all the sections in the configuration
-     * @return array Array with the names of all the ini files in the
-     * configuration directory, withouth the extension
-     */
-    public function getAllSections() {
-        if ($this->config === null) {
-            $this->read();
-        }
-
-        return array_keys($this->config);
-    }
-
-    /**
      * Gets the complete configuration
      * @return array Hierarchic array with each configuration token as a key
      */
