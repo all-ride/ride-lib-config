@@ -21,7 +21,7 @@ interface Config {
 
     /**
      * Gets the complete configuration as a tree
-     * @return array Tree like array with each configuration key token as a
+     * @return array Tree like array with each configuration key token as an
      * array key
      */
     public function getAll();

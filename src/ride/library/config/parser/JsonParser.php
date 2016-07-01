@@ -17,6 +17,10 @@ class JsonParser implements Parser {
      * could not be parsed
      */
     public function parseToPhp($string) {
+        if ($string == '') {
+            return array();
+        }
+
         $string = $this->removeComments($string);
 
         $result = json_decode($string, true);
