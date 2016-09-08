@@ -13,7 +13,12 @@
     },
     "autoload": {
         "psr-0": {
-            "ride\\library\\config\\": ["src/", "test/src/"]
+            "ride\\library\\config\\": ["src/"]
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "ride\\library\\config\\": ["test/src/"]
         }
     }
 }
