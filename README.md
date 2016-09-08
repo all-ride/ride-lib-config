@@ -2,18 +2,20 @@
 
 Configuration library of the PHP Ride framework.
 
-## Config
+## What's In This Library
+
+### Config
 
 The _Config_ interface defines a configuration data container used to get and set parameters.
 A generic implementation is provided.
 
-## ConfigIO
+### ConfigIO
 
 To read and write the configuration from the data source, the _ConfigIO_ interface is used.
 Out of the box, you can create a _ParserConfigIO_ with a parser of your choice wrapped around the file browser of _ride-lib-system_.
 You can wrap any IO around the _CachedConfigIO_ to improve performance.
 
-## Parser
+### Parser
 
 The _Parser_ interface is used to read and write different file formats.
 An ini and json implementation are provided.
@@ -91,4 +93,12 @@ function foo(FileBrowser $fileBrowser) {
 ## Limitations
 
 You cannot have a value for a key which has subkeys.
-This means, if you have a value for a key called _system.directory.cache_, you can not have a value for _system.directory_. 
+This means, if you have a value for a key called _system.directory.cache_, you can not have a value for _system.directory_.
+
+## Installation
+
+You can use [Composer](http://getcomposer.org) to install this library.
+
+```
+composer require ride/lib-config
+``` 

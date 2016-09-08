@@ -42,7 +42,9 @@ class GenericConfigTest extends PHPUnit_Framework_TestCase {
         );
         $this->mockValue = 'test';
 
-        $this->ioMock = $this->getMock('ride\\library\\config\\io\\ConfigIO');
+        $this->ioMock = $this->getMockBuilder('ride\\library\\config\\io\\ConfigIO')
+                             ->getMock();
+
         $this->config = new GenericConfig($this->ioMock);
     }
 
