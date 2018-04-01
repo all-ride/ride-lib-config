@@ -2,9 +2,9 @@
 
 namespace ride\library\config;
 
-use \PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ConfigHelperTest extends PHPUnit_Framework_TestCase {
+class ConfigHelperTest extends TestCase {
 
     /**
      * @var ride\library\config\ConfigHelper

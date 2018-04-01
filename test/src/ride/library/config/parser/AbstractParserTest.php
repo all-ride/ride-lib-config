@@ -2,9 +2,9 @@
 
 namespace ride\library\config\parser;
 
-use \PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-abstract class AbstractParserTest extends PHPUnit_Framework_TestCase {
+abstract class AbstractParserTest extends TestCase {
 
     /**
      * @var ride\library\config\parser\Parser

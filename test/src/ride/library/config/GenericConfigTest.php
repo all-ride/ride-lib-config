@@ -2,9 +2,9 @@
 
 namespace ride\library\config;
 
-use \PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class GenericConfigTest extends PHPUnit_Framework_TestCase {
+class GenericConfigTest extends TestCase {
 
     /**
      * @var Config
