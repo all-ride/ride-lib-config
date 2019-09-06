@@ -70,62 +70,8 @@ class JsonParser implements Parser {
      * @param string $string String to process
      * @return string String without comments
      */
-    protected function removeComments($string) {
-        $output = '';
-
-        $isInsideString = false;
-        $comment = null;
-        $currentChar = null;
-        $stringLength = strlen($string);
-
-        for ($i = 0; $i < $stringLength; $i++) {
-            $previousChar = $currentChar;
-            $currentChar = substr($string, $i, 1);
-            $buffer = substr($string, $i, 2);
-
-            // check if we are inside a string
-            if (!$comment && $previousChar !== '\\' && $currentChar === '"') {
-                $isInsideString = !$isInsideString;
-            }
-
-            if ($isInsideString) {
-                $output .= $currentChar;
-
-                continue;
-            }
-
-            // check if we are inside a comment
-            if (!$comment && $buffer === '//') {
-                $comment = 'single';
-                $i++;
-            } elseif ($comment === 'single' && $buffer === "\r\n") {
-                $comment = null;
-                $output .= $buffer;
-                $i++;
-
-                continue;
-            } elseif ($comment === 'single' && $currentChar === "\n") {
-                $comment = null;
-            } elseif (!$comment && $buffer === '/*') {
-                $comment = 'multi';
-                $i++;
-
-                continue;
-            } elseif ($comment === 'multi' && $buffer === '*/') {
-                $comment = null;
-                $i++;
-
-                continue;
-            }
-
-            if ($comment) {
-                continue;
-            }
-
-            $output .= $currentChar;
-        }
-
-        return $output;
+    protected function removeComments($json) {
+        return preg_replace("#(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|([\s\t]//.*)|(^//.*)#", '', $json);
     }
 
     /**
