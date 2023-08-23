@@ -32,6 +32,11 @@ class ParserConfigIO extends AbstractIO implements ConfigIO {
     protected $config;
 
     /**
+     * @var
+     */
+    protected $variables;
+
+    /**
      * Constructs a new Ride configuration I/O
      * @return null
      */
